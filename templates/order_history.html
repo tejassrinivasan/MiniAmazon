@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block heading %}Order History{% endblock %}
+{% block content %}
+
+<h3 class="title">Order History</h3>
+<ul>
+  {% for order in range(0, orders|length)%}
+  <div class="box">
+    <h1> <b>Order ID:</b> {{orders[order].order_id}} </h1>
+    <li>
+        <b>Total Cost:</b> ${{'%0.2f' % order_totals[order]}}</a></p>
+    </li>
+    <li>
+        <b>Tracking Number:</b> {{orders[order].tracking_num}}</a></p>
+    </li>
+
+    <p> <b> Address:</b> {{address}}</p>
+    <p> <b> Order Date:</b> {{orders[order].date_ordered}}</p>
+    <p> <b> Delivery Date: </b> {{delivery_dates[order]}}</p>
+    <br>
+    <a class="button is-warning is-large is-inverted" href="{{url_for('tracking', tracking_num=orders[order].tracking_num)}}">
+      Track Your Package!
+    </a>
+    {% for item in range(0, items[order]|length)%}
+    <li>
+      <hr>
+      <div class="columns">
+        <div class="column is-one-fifth"><img src={{items[order][item].image}} height="150" width="150"  style="float:right"></div>
+        <div class="column"><div class="box">
+          <p style="text-align:left"> <b>Item:</b> <a href="{{url_for('item', product_id=items[order][item].product_id)}}">{{items[order][item].item_name}}</a> </p>
+          <br><p style="text-align:left"> <b>Seller:</b> {{items[order][item].seller_username}} </p>
+          <br><p style="text-align:left"> <b>Condition:</b> {{items[order][item].condition}} </p>
+          <br><p style="text-align:left"> <b>Price:</b> ${{'%0.2f' % items[order][item].price}} </p>
+          <br><p style="text-align:left"> <b>Quantity ordered:</b> {{inorders[order][item].order_quantity}} </p>
+          {% if not inorders[order][item].date_returned %}
+          <a class="button is-light is-primary is-rounded is-right" href="{{url_for('return_item', product_id=items[order][item].product_id, seller_username=items[order][item].seller_username, order_id=orders[order].order_id)}}">
+            Return Item
+          </a>
+          {% else %}
+          <br><p style="text-align:left"> <b>Item returned on</b> {{inorders[order][item].date_returned}} </p>
+          {% endif %}
+        </div></div>
+      </div>
+
+
+    </li>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</ul>
+<hr/>
+
+{% endblock %}
