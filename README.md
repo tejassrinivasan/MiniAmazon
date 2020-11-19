@@ -1,5 +1,9 @@
 ## Mini Amazon Project
 
+## Link to Final Website
+
+http://mini-amazon-316.herokuapp.com/
+
 ## Installation
 
 1. (Optional) Create a virtual environment ([command line](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#installing-virtualenv) 
